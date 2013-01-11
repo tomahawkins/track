@@ -77,12 +77,18 @@ tracksEqual a b = match (perm b)
                || match (perm $ inverse b)
                || match (perm $ reverse $ inverse b)
   where
+  match :: [Track] -> Bool
   match bs = any (a ==) bs
+
+  perm :: Track -> [Track]
   perm t = [ take (length t) $ drop n $ t ++ t | n <- [0 .. length t - 1] ]
+
+  inverse :: Track -> Track
   inverse = map inv
-  inv a = case a of
-    Straight  -> Straight
-    LeftTurn  -> RightTurn
-    RightTurn -> LeftTurn
+    where
+    inv a = case a of
+      Straight  -> Straight
+      LeftTurn  -> RightTurn
+      RightTurn -> LeftTurn
 
 
